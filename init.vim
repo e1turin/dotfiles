@@ -15,6 +15,15 @@ Plug 'cocopon/iceberg.vim'
 " molokai theme
 Plug 'fatih/molokai'
 
+" great choose of themes
+Plug 'flazz/vim-colorschemes'
+" good theme switcher by f8 button
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-colorscheme-switcher'
+
+"Plug 'ryanoasis/vim-devicons'
+
+
 " PLUGINS
 
 " autoformat binded on alt+f. 
@@ -37,7 +46,23 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-surround'
 
 "" PyMode
-Plug 'klen/python-mode'
+"Plug 'klen/python-mode'
+
+"" Slime
+Plug 'jpalardy/vim-slime'
+
+"" LaTeX
+Plug 'lervag/vimtex'
+
+"" Markdown
+Plug 'shime/vim-livedown'
+" better viewer, but need nodeJS and setup:
+" If you don't have nodejs and yarn
+" use pre build, add 'vim-plug' to the filetype list so vim-plug can update this plugin
+" see: https://github.com/iamcco/markdown-preview.nvim/issues/50
+"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+" If you have nodejs and yarn
+"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
 "" Multiple Cursors
 "Plug 'terryma/vim-multiple-cursors'
@@ -91,22 +116,34 @@ Plug 'Shougo/deoplete-clangx'
 call plug#end()
 
 "SYNTAX
-"colorscheme iceberg "oceanicnext / onedark / gruvbox / iceberg / base16-atlas / base16-black-metal... / base16-atlas / base16-dartooth / base16-embers / base16-grayscale / base16-classic-dark /  base16-irblack /
+"colorscheme iceberg "oceanicnext / onedark / gruvbox / iceberg / base16-atlas / base16-black-metal... / base16-atlas / base16-dartooth / base16-embers / base16-grayscale / base16-classic-dark /  base16-irblack / happy_hacking
 colorscheme iceberg
-set background=dark
+"set background=dark
 "set termguicolors
 " something like 'guicolor' or 'termsheme'    
 "let base16colorspace=256
-
 
 "" Enable syntax highlighting
 syntax enable
 syntax on
 
+"" setup russian lang remote
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+
+""Если вы используете обычную qwerty, то поменяте mac на win
+"set keymap=russian-jcukenwin
+""Язык ввода при старте Вима - Английский
+"set iminsert=0
+""Аналогично настраивается режим поиска
+"set imsearch=0
+
+
 "set guifont=courier_new:h12
+set guifont=Fira\ Code\ Light:h12 "light version
+"set guifont=consolas:h14
 
 "" Display line numbers
-set number
+set number 
 set norelativenumber
 
 "" Encoding UTF-8
@@ -138,13 +175,29 @@ set shiftround
 "set listchars+=extends:❯    " The character in the last column when the line continues right
 "set listchars+=precedes:❮   " The character in the first column when the line continues left
 
-"set nowrap                          " don't wrap lines
+"set nowrap " don't wrap lines
+set wrap linebreak nolist "soft wraping
+"set textwidth=80
+
 set scrolloff=3   " Show 3 extra lines when scrolling up/down
-set cursorline nocursorcolumn" Highlight the line where the cursor is
-" Add some space around the cursor when moving it near the borders of the screen
-set sidescrolloff=2
-" Enable mouse in console mode
-set mouse=a
+
+set cursorline nocursorcolumn "Highlight the line where the cursor is
+set sidescrolloff=2 " Add some space around the cursor when moving it near the borders of the screen
+
+set mouse=a " Enable mouse in console mode
+
+""Если вы используете обычный терминальный Вим, а не NeoVim, то...
+""... для изменения курсора в разных режимах используйте это:
+"set ttimeoutlen=10 "Понижаем задержку ввода escape последовательностей
+"let &t_SI.="\e[5 q" "SI = режим вставки
+"let &t_SR.="\e[3 q" "SR = режим замены
+"let &t_EI.="\e[1 q" "EI = нормальный режим
+""Где 1 - это мигающий прямоугольник
+""2 - обычный прямоугольник
+""3 - мигающее подчёркивание
+""4 - просто подчёркивание
+""5 - мигающая вертикальная черта
+""6 - просто вертикальная черта
 
 "" SEARCH
 " (use :let @/="" to clear search history ???)
@@ -170,8 +223,8 @@ noremap  <c-n> :NERDTreeToggle<cr>
 "let g:NERDTreeWinPos = 'left'
 
 ""let g:NERDTreeQuitOnOpen = '1'
-let g:NERDTreeDirArrowExpandable = '+'
-let g:NERDTreeDirArrowCollapsible = '-'
+"let g:NERDTreeDirArrowExpandable = '+'
+"let g:NERDTreeDirArrowCollapsible = '-'
 
 "" === NERDTree === "
 "" Show hidden files/directories
@@ -190,19 +243,23 @@ let g:NERDTreeShowHidden = 1
 "hi! StatusLineNC guifg=#16252b guibg=#16252b
 
 
-" ################ AIRLINE (:h airline) ##########################
+" ################ AIRLINE (:h airline) ########################## 
+let g:airline_powerline_fonts = 1 "turn on supporting of Powerline fonts
+"let g:airline#extensions#keymap#enabled = 0 "dont show current mapping
+"let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "costom field Z (position of coursore)
+let g:Powerline_symbols='unicode' "unicode supporting
+let g:airline#extensions#xkblayout#enabled = 0 
 
 
-
-"tabline{
+"tabline<{
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline_statusline_ontop=1
 
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
-let g:airline#extensions#tabline#formatter = 'default' "defoult\jsformatter\unique_tail\unique_tail_improved...
-"}tabline
+"let g:airline#extensions#tabline#formatter = 'default' "defoult\jsformatter\unique_tail\unique_tail_improved...
+"}>tabline
 
 "* enable modified detection 
 "let g:airline_detect_modified=1
@@ -212,19 +269,19 @@ let g:airline_theme= 'atomic'    " 'hybrid', 'atomic', 'fruit_punch', 'alduin', 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_left_sep='>'
+"variaty symbols
+let g:airline_left_sep='|>' "'⋄⋄⋄'
 "let g:airline_left_sep='►'
 "let g:airline_left_sep = '▶'
-let g:airline_right_sep='<'
+let g:airline_right_sep='<|' "'⋄⋄⋄'
 "let g:airline_right_sep='◄'
 "let g:airline_right_sep = '◀'
-" unicode symbols
 "let g:airline_left_sep = '»'
 "let g:airline_left_alt_sep = ''
 "let g:airline_right_sep = '«'
 "let g:airline_right_alt_sep = ''
 let g:airline_symbols.crypt = 'cr'
-"let g:airline_symbols.linenr = 'ln'
+let g:airline_symbols.linenr = 'ln'
 let g:airline_symbols.linenr = '¶'
 "let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.maxlinenr = '-lns'
@@ -233,7 +290,7 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.spell = '$'
 let g:airline_symbols.notexists = 'Ɇ'
 let g:airline_symbols.whitespace = 'Ξ'
-"let g:airline_symbols.branch = ''
+let g:airline_symbols.branch = 'ψ'
 "let g:airline_symbols.readonly = ''
 "let g:airline_symbols.dirty=⚡
 
@@ -284,6 +341,15 @@ let g:airline#extensions#ale#enabled = 1
 "Can be toggled on/off by pressing <c-d> inside the prompt.
 let g:ctrlp_map = '<c-p>'
   let g:ctrlp_cmd = 'CtrlP'
+
+" ######################### VIM-SLIME ###########################
+" <Ctrl-c-c>
+"Для tmux
+"let g:slime_target = "tmux"
+""Для обычного Вима
+"let g:slime_target = "vimterminal"
+""Для Вима избранных
+let g:slime_target = "neovim"
 
 " ###################### DEOPLETE comletion #####################
 let g:deoplete#enable_at_startup = 1
@@ -341,6 +407,7 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 " ######################## JEDI #################################
 "g:deoplete#sources#jedi#statement_length=50 " Sets the maximum length of completion description text. If this is exceeded, a simple description is used instead. Default: 50
+
 "g:deoplete#sources#jedi#enable_typeinfo=1 "Enables type information of completions. If you disable it, you will get the faster results. Default: 1
 "g:deoplete#sources#jedi#show_docstring=0 "Shows docstring in preview window. Default: 0
 
@@ -352,6 +419,8 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 "let g:clang_library_path='/usr/lib64/libclang.so.3.8'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 ""for deoplete
 " Change clang binary path
 call deoplete#custom#var('clangx', 'clang_binary', 'C:\Users\Ivan\gcc\bin') "/usr/local/bin/clang
@@ -361,15 +430,114 @@ call deoplete#custom#var('clangx', 'default_c_options', '')
 call deoplete#custom#var('clangx', 'default_cpp_options', '')
 """
 
+" ############################### LaTeX ###############################
+"  Теперь, если вы войдёте в файл с расширением .tex и введёте <localleader>ll (или :VimtexCompile), то у вас скомпилируется проект, предупреждения и ошибки отправятся в Quickfix и Location списки, а также откроется системный просмотрщик pdf.
+let g:tex_flavor = 'latex' "Уточняем какой Тех
+"Отключаем автоматическое открытие окна Quickfix
+let g:vimtex_quickfix_mode = 0
+"let g:vimtex_view_method = 'zathura'
 
-"######################################################### --MAPPINGS-- ##################################
+" darkmode of zathura
+"set recolor true
+"set recolor-darkcolor "#dcdccc"
+"set recolor-lightcolor "#1f1f1f"
+
+" ############################### Markdown-viewer #############################
+"simple viewer:
+nnoremap <leader>ld :LivedownToggle<CR> 
+"better viewer: 
+"let g:mkdp_auto_start = 0 " set to 1, nvim will open the preview window after entering the markdown buffer
+"let g:mkdp_auto_close = 1 " set to 1, the nvim will auto close current preview window when change from markdown buffer to another buffer
+
+"" set to 1, the vim will refresh markdown when save the buffer or leave from insert mode, default 0 is auto refresh markdown as you edit or move the cursor
+"let g:mkdp_refresh_slow = 0
+
+"" set to 1, the MarkdownPreview command can be use for all files, by default it can be use in markdown file
+"let g:mkdp_command_for_global = 0
+
+"" set to 1, preview server available to others in your network by default, the server listens on localhost (127.0.0.1)
+"let g:mkdp_open_to_the_world = 0
+
+"" use custom IP to open preview page useful when you work in remote vim and preview on local browser more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+"let g:mkdp_open_ip = ''
+
+"" specify browser to open preview page
+"let g:mkdp_browser = ''
+
+"" set to 1, echo preview page url in command line when open preview page
+"let g:mkdp_echo_preview_url = 0
+
+"" a custom vim function name to open preview page this function will receive url as param
+"let g:mkdp_browserfunc = ''
+
+"" options for markdown render
+"" mkit: markdown-it options for render
+"" katex: katex options for math
+"" uml: markdown-it-plantuml options
+"" maid: mermaid options
+"" disable_sync_scroll: if disable sync scroll, default 0
+"" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+""   middle: mean the cursor position alway show at the middle of the preview page
+""   top: mean the vim top viewport alway show at the top of the preview page
+""   relative: mean the cursor position alway show at the relative positon of the preview page
+"" hide_yaml_meta: if hide yaml metadata, default is 1
+"" sequence_diagrams: js-sequence-diagrams options
+"" content_editable: if enable content editable for preview page, default: v:false
+"let g:mkdp_preview_options = {
+    "\ 'mkit': {},
+    "\ 'katex': {},
+    "\ 'uml': {},
+    "\ 'maid': {},
+    "\ 'disable_sync_scroll': 0,
+    "\ 'sync_scroll_type': 'middle',
+    "\ 'hide_yaml_meta': 1,
+    "\ 'sequence_diagrams': {},
+    "\ 'flowchart_diagrams': {},
+    "\ 'content_editable': v:false
+    "\ }
+
+"" use a custom markdown style must be absolute path
+"" like '/Users/username/markdown.css' or expand('~/markdown.css')
+"let g:mkdp_markdown_css = ''
+
+"" use a custom highlight style must absolute path
+"" like '/Users/username/highlight.css' or expand('~/highlight.css')
+"let g:mkdp_highlight_css = ''
+
+"" use a custom port to start server or random for empty
+"let g:mkdp_port = ''
+
+"" preview page title
+"" ${name} will be replace with the file name
+"let g:mkdp_page_title = '「${name}」'
+
+"""" MAPPINGS 
+""""normal/insert
+"""<Plug>MarkdownPreview
+"""<Plug>MarkdownPreviewStop
+"""<Plug>MarkdownPreviewToggle
+"""" example
+"""nmap <C-s> <Plug>MarkdownPreview
+"""nmap <M-s> <Plug>MarkdownPreviewStop
+"""nmap <C-p> <Plug>MarkdownPreviewToggle
+""" Commands
+"""" Start the preview
+""":MarkdownPreview
+"""" Stop the preview"
+""":MarkdownPreviewStop
+
+
+
+"###########################################################################################
+"######################################### <--MAPPINGS--> ##################################
+command W :w
 "" Toggle comment in visual mode
 let mapleader = "\\"
 vmap <silent> /  <Plug>NERDCommenterToggle
 "vmap <leader>/ <plug>NERDCommenterComment
 vmap <S-/> <plug>NERDCommenterComment
 
-
+command R :NERDTreeRefreshRoot
 "inoremap <C-Space> <c-x><c-o>
 
 "" Select from completion list with SHIFT-j/k
@@ -439,6 +607,7 @@ inoremap <M-f> <Esc>:Neoformat<CR>i
 
 """""""""""""""""""""""""""""""""""""
 
+command Clr :g/<П/d | :w
 
 "" Toggle between last 2 buffers
 nnoremap <leader><tab> <c-^>
@@ -452,7 +621,7 @@ nnoremap <leader><tab> <c-^>
 """
 
 """############## Compile setup ####################
-command CompileAfterWriting :w | :! g++ % -o %:r_Run.exe 
+command Make :w | :! g++ % -o %:r_Run.exe 
 "-std=c++14
 
 " ^^^ add after '%' -> ':t'
