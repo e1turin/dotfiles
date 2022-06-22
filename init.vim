@@ -1,4 +1,4 @@
-let g:python3_host_prog='C:\Users\Ivan\AppData\Local\Programs\Python\Python38-32\python'
+let g:python3_host_prog='C:/Users/Ivan/AppData/Local/Programs/Python/Python310'
 
 """""""""""""""""""""""" first of all look at man with 'K' command(shift k)
 
@@ -23,6 +23,7 @@ Plug 'xolox/vim-colorscheme-switcher'
 
 "Plug 'ryanoasis/vim-devicons'
 
+" Plug 'sheerun/vim-polyglot'
 
 " PLUGINS
 
@@ -52,7 +53,7 @@ Plug 'tpope/vim-surround'
 Plug 'jpalardy/vim-slime'
 
 "" LaTeX
-Plug 'lervag/vimtex'
+"Plug 'lervag/vimtex'
 
 "" Markdown
 Plug 'shime/vim-livedown'
@@ -75,7 +76,7 @@ Plug 'shime/vim-livedown'
 
 "" Deoplete completion
 "if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "else
 "  Plug 'Shougo/deoplete.nvim'
 "  Plug 'roxma/nvim-yarp'
@@ -83,7 +84,7 @@ Plug 'shime/vim-livedown'
 "endif
 Plug 'Shougo/neoinclude.vim'
 Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+"Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'ternjs/tern_for_vim'
 "Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 "Plug 'sebastianmarkow/deoplete-rust'
@@ -113,6 +114,8 @@ Plug 'Shougo/deoplete-clangx'
 "Plug 'ap/vim-css-color'
 
 "Plug 'rhysd/open-pdf.vim' "undefined error
+
+Plug 'udalov/kotlin-vim'
 call plug#end()
 
 "SYNTAX
@@ -144,7 +147,8 @@ set guifont=Fira\ Code\ Light:h12 "light version
 
 "" Display line numbers
 set number 
-set norelativenumber
+"set norelativenumber
+set relativenumber
 
 "" Encoding UTF-8
 set encoding=UTF-8
@@ -247,7 +251,7 @@ let g:NERDTreeShowHidden = 1
 let g:airline_powerline_fonts = 1 "turn on supporting of Powerline fonts
 "let g:airline#extensions#keymap#enabled = 0 "dont show current mapping
 "let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "costom field Z (position of coursore)
-let g:Powerline_symbols='unicode' "unicode supporting
+"let g:Powerline_symbols='unicode' "unicode supporting
 let g:airline#extensions#xkblayout#enabled = 0 
 
 
@@ -255,8 +259,8 @@ let g:airline#extensions#xkblayout#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline_statusline_ontop=1
 
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "let g:airline#extensions#tabline#formatter = 'default' "defoult\jsformatter\unique_tail\unique_tail_improved...
 "}>tabline
@@ -269,30 +273,55 @@ let g:airline_theme= 'atomic'    " 'hybrid', 'atomic', 'fruit_punch', 'alduin', 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-"variaty symbols
-let g:airline_left_sep='|>' "'⋄⋄⋄'
-"let g:airline_left_sep='►'
-"let g:airline_left_sep = '▶'
-let g:airline_right_sep='<|' "'⋄⋄⋄'
-"let g:airline_right_sep='◄'
-"let g:airline_right_sep = '◀'
-"let g:airline_left_sep = '»'
-"let g:airline_left_alt_sep = ''
-"let g:airline_right_sep = '«'
-"let g:airline_right_alt_sep = ''
-let g:airline_symbols.crypt = 'cr'
-let g:airline_symbols.linenr = 'ln'
-let g:airline_symbols.linenr = '¶'
-"let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.maxlinenr = '-lns'
-let g:airline_symbols.paste = 'ρ'
-"let g:airline_symbols.paste = '||'
-let g:airline_symbols.spell = '$'
-let g:airline_symbols.notexists = 'Ɇ'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.branch = 'ψ'
-"let g:airline_symbols.readonly = ''
-"let g:airline_symbols.dirty=⚡
+  if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+  endif
+
+  " unicode symbols
+  "let g:airline_left_sep = '»'
+  "let g:airline_left_sep = '▶'
+  "let g:airline_right_sep = '«'
+  "let g:airline_right_sep = '◀'
+  "let g:airline_symbols.colnr = ' ㏇:'
+  "let g:airline_symbols.colnr = ' ℅:'
+  "let g:airline_symbols.crypt = '🔒'
+  "let g:airline_symbols.linenr = '☰'
+  "let g:airline_symbols.linenr = ' ␊:'
+  "let g:airline_symbols.linenr = ' ␤:'
+  "let g:airline_symbols.linenr = '¶'
+  "let g:airline_symbols.maxlinenr = ''
+  "let g:airline_symbols.maxlinenr = '㏑'
+  "let g:airline_symbols.branch = '⎇'
+  "let g:airline_symbols.paste = 'ρ'
+  "let g:airline_symbols.paste = 'Þ'
+  "let g:airline_symbols.paste = '∥'
+  "let g:airline_symbols.spell = 'Ꞩ'
+  "let g:airline_symbols.notexists = 'Ɇ'
+  "let g:airline_symbols.whitespace = 'Ξ'
+
+  " powerline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  "let g:airline_symbols.colnr = ' :'
+  let g:airline_symbols.readonly = ''
+  "let g:airline_symbols.linenr = ' :'
+  "let g:airline_symbols.maxlinenr = '☰ '
+  "let g:airline_symbols.dirty='⚡'
+
+  " old vim-powerline symbols
+  "let g:airline_left_sep = '⮀'
+  "let g:airline_left_alt_sep = '⮁'
+  "let g:airline_right_sep = '⮂'
+  "let g:airline_right_alt_sep = '⮃'
+  "let g:airline_symbols.branch = '⭠'
+  "let g:airline_symbols.readonly = '⭤'
+  "let g:airline_symbols.linenr = '⭡'
+  "
+  let g:airline_symbols.linenr = ' ln:'
+  let g:airline_symbols.colnr = ' col:'
 
 ""* enable paste detection 
 "let g:airline_detect_paste=1
@@ -352,27 +381,27 @@ let g:ctrlp_map = '<c-p>'
 let g:slime_target = "neovim"
 
 " ###################### DEOPLETE comletion #####################
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 
-"""
-if !exists('g:context_filetype#same_filetypes')
-    let g:context_filetype#filetypes = {}
-endif
-let g:context_filetype#filetypes.svelte = [
-\    {'filetype' : 'css', 'start' : '<style>', 'end' : '</style>'},
-\ ]
-call deoplete#custom#var('omni', 'functions', {
-\ 'css': ['csscomplete#CompleteCSS']
-\})
-"""
+""""
+"if !exists('g:context_filetype#same_filetypes')
+    "let g:context_filetype#filetypes = {}
+"endif
+"let g:context_filetype#filetypes.svelte = [
+"\    {'filetype' : 'css', 'start' : '<style>', 'end' : '</style>'},
+"\ ]
+"call deoplete#custom#var('omni', 'functions', {
+"\ 'css': ['csscomplete#CompleteCSS']
+"\})
+""""
 
-"""
-call deoplete#custom#var('omni', 'input_patterns', {
-\ 'javascript': '[^. *\t]\.\w*',
-\ })
-call deoplete#custom#var('omni', 'functions', {
-\ 'javascript': ['javascriptcomplete#CompleteJS']
-\})
+""""
+"call deoplete#custom#var('omni', 'input_patterns', {
+"\ 'javascript': '[^. *\t]\.\w*',
+"\ })
+"call deoplete#custom#var('omni', 'functions', {
+"\ 'javascript': ['javascriptcomplete#CompleteJS']
+"\})
 """
 """set popup menu colors
 "highlight Pmenu ctermbg=8 guibg=#606060
@@ -423,11 +452,11 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 ""for deoplete
 " Change clang binary path
-call deoplete#custom#var('clangx', 'clang_binary', 'C:\Users\Ivan\gcc\bin') "/usr/local/bin/clang
+"call deoplete#custom#var('clangx', 'clang_binary', 'C:\Users\Ivan\gcc\bin') "/usr/local/bin/clang
 
-" Change clang options
-call deoplete#custom#var('clangx', 'default_c_options', '')
-call deoplete#custom#var('clangx', 'default_cpp_options', '')
+"" Change clang options
+"call deoplete#custom#var('clangx', 'default_c_options', '')
+"call deoplete#custom#var('clangx', 'default_cpp_options', '')
 """
 
 " ############################### LaTeX ###############################
@@ -527,9 +556,8 @@ nnoremap <leader>ld :LivedownToggle<CR>
 """:MarkdownPreviewStop
 
 
-
-"###########################################################################################
-"######################################### <--MAPPINGS--> ##################################
+"#######################################################
+"################### <--MAPPINGS--> ####################
 command W :w
 "" Toggle comment in visual mode
 let mapleader = "\\"
